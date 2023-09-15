@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link href="{{ url_for('static',filename='lib/animate/animate.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="{{ url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="{{ url_for('static',filename='css/style.css') }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>eLEARN</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="home.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARN</h2>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="/" class="nav-item nav-link active">Home</a>
+        </div>
+    </div>
+</nav>
+<div id="alert" class="alert" role="alert">
+</div>
+<form name = "home" action="/evaluate" method="post">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Question</th>
+            <th scope="col"> </th>
+            <th scope="col">Answers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>5 + 3</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans1"></td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>7 &times 6</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans2"></td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>369 - 245</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans3"></td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>416 &divide 104</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans4"></td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>560 &times 8</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans5"></td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>12<sup>4</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans6"></td>
+          </tr>
+          <tr>
+            <th scope="row">7</th>
+            <td>(5 + 3) &times (4 - 8)</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans7"></td>
+          </tr>
+          <tr>
+            <th scope="row">8</th>
+            <td>35 + [24 - 15 + 6 &times 5]</td>
+            <td> = </td>
+            <td><input type = "number" name = "ans8"></td>
+          </tr>
+        </tr>
+      </tbody>
+      <table class="table">
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit" class="btn btn-primary">Evaluate</button>
+            <button id="reset-btn" type="reset" class="btn btn-secondary">Reset</button>
+          </td>
+        </tr>
+    </table>      
+          
+    </form>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+    <script>
+      document.getElementById('reset-btn').addEventListener('click',function(){
+        document.location.href='/';
+      })
+    </script>
+    <script>
+      let coc = '{{ coc }}';
+      var alertType = 'light';
+      var message = ''; 
+      console.log('coc', coc);
+      if(coc <= 0){
+        alertType = 'danger';
+        message='You have performed poorly in Number System and Operations. Hence, you are advised to revise both the concepts';
+      }
+      else if(coc == 1){
+        alertType = 'warning';
+        message='You have performed poorly in Number Systems but good in Operations. Hence, you are advised to revise Number Systems again';
+      }
+      else if(coc == 2){
+        alertType = 'warning';
+        message='You have performed poorly in Operations but good in Number Systems. Hence, you are advised to revise Operations again';
+      }
+      else if(coc==3){
+        alertType = 'success';
+        message = 'Congratulations! You have performed really well in both Number Systems and Operations. You may proceed to the next level'
+      }
+      else{
+        alertType='';
+        message=''
+      }
+      var alertElt = document.getElementById("alert");
+      alertElt.classList.remove('alert-success')
+      alertElt.classList.remove('alert-warning')
+      alertElt.classList.remove('alert-danger')
+      alertElt.classList.add('alert-' + alertType);
+      alertElt.textContent=message;
+    </script>
+        
+</body>
+</html>
+
